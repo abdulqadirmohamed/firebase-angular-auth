@@ -1,24 +1,29 @@
-<header class="container mx-auto">
-    <nav class="flex justify-between items-center">
-        @if (authService.currentUserSignal() == null) {
-         <ul class="flex py-5">
-           <li class="mr-6">
-             <a class="text-blue-500 hover:text-blue-800" routerLink="login"
-               >Login</a
-             >
-           </li>
-           <li class="mr-6">
-             <a class="text-blue-500 hover:text-blue-800" routerLink="register">Register</a>
-           </li>
-         </ul>
-        }@else {
-     
-          <div>
-         <h1>{{authService.currentUserSignal()?.username}}</h1>
-          <button (click)="logout()" class="text-blue-500 hover:text-blue-800" href="#">Logout</button>
+<header class="border-b-[1px]">
+  <div class="container mx-auto flex items-center justify-between py-4">
+    <a routerLink="/" class="font-bold text-2xl">Firebase<span class="text-red-700">Auth</span></a>
+    <nav>
+      <ul class="flex items-center gap-6 text-black">
+        <li class="mr-6">
+          <a class="text-blue-500 hover:text-blue-800" routerLink="register">Path</a>
+        </li>
+        <li class="mr-6">
+          <a class="text-blue-500 hover:text-blue-800" routerLink="register">Register</a>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      @if (authService.currentUserSignal() == null) {
+      <a routerLink="login">Login</a>
+
+      }@else {
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center gap-3">
+          <h1 class="capitalize font-bold">{{authService.currentUserSignal()?.username}}</h1>
         </div>
-        }
-       
-       </nav>
-    
+        <button (click)="logout()" class="bg-red-700 text-white rounded-full px-3 py-1 font-semibold">Logout</button>
+      </div>
+      }
+    </div>
+
+  </div>
 </header>
