@@ -15,9 +15,11 @@ import { UserInterface } from '../../types/user.interface';
 export class AuthService {
   firebaseAuth = inject(Auth);
 
-  user$ = user(this.firebaseAuth)
-  currentUserSignal = single<UserInterface | null | undefined>(undefined)
+  user$ = user(this.firebaseAuth); // Observable for Firebase user
+
   
+  // Signal to store current user state
+  currentUserSignal = signal<UserInterface | null | undefined>(undefined);
 
   register(
     email: string,
@@ -42,4 +44,12 @@ export class AuthService {
     ).then(() => {});
     return from(promise);
   }
+
+  // Logout the user
+  logout(): Observable<void> {
+    const promise = this.firebaseAuth.signOut();
+    return from(promise);
+  }
+
+  
 }
