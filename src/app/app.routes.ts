@@ -7,16 +7,19 @@ import { unauthGuard } from './guards/unauth.guard';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { HomeComponent } from './components/home/home.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+
 
 export const routes: Routes = [
 
     {
-        path: 'login',
+        path: 'auth',
         component: AuthLayoutComponent,
         children: [
-            { path: '', component: LoginComponent }
+          { path: 'login', component: LoginComponent },
+          { path: 'password_reset', component: PasswordResetComponent }  // Change path to 'forgot-password'
         ]
-    },
+      },
     {
         path: '',
         component: MainLayoutComponent,
