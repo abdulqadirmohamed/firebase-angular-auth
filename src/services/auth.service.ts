@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateProfile,
   user,
@@ -9,23 +10,19 @@ import {
 import { from, Observable, single } from 'rxjs';
 import { UserInterface } from '../../types/user.interface';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   firebaseAuth = inject(Auth);
 
+
   user$ = user(this.firebaseAuth); // Observable for Firebase user
 
-  
-  // Signal to store current user state
   currentUserSignal = signal<UserInterface | null | undefined>(undefined);
 
-  register(
-    email: string,
-    username: string,
-    password: string
-  ): Observable<void> {
+  register(email: string, username: string, password: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(
       this.firebaseAuth,
       email,
@@ -51,5 +48,14 @@ export class AuthService {
     return from(promise);
   }
 
+   // Reset password
+   resetPassword(email: string): Observable<void> {
+    const promise = sendPasswordResetEmail(this.firebaseAuth, email)
+      .then(() => {})
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+      });
+    return from(promise);
+  }
   
 }
